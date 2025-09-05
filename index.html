@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo — Cloud Sync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="wrap nav">
+            <div class="logo"><span class="dot"></span> Todo — Cloud Sync</div>
+            <div class="sync pill" id="sync">
+                <span>Connecting…</span>
+            </div>
+            <div>
+                <button id="login-btn" class="btn-small" style="display:none">Login</button>
+                <button id="logout-btn" class="btn-small" style="display:none">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="grid">
+            <div class="card hero">
+                <h1>Organize your day, everywhere.</h1>
+                <p>Ultra-fast, real-time, and synced securely to your private space.</p>
+                <div class="input-row" id="add-form">
+                    <input id="title" class="input" placeholder="Add a task (e.g. “Email the client”)" />
+                    <input id="due" type="date" class="input" />
+                    <button id="add" class="btn btn-primary">Add</button>
+                </div>
+                <div class="toolbar">
+                    <div class="filters" id="filters">
+                        <button class="chip active" data-filter="all">All</button>
+                        <button class="chip" data-filter="active">Active</button>
+                        <button class="chip" data-filter="completed">Completed</button>
+                    </div>
+                    <input id="search" class="input search" placeholder="Search tasks" />
+                    <div class="actions">
+                        <button id="clear-completed" class="btn btn-ghost">Clear Completed</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="margin:0">Your Tasks</h3>
+                    <small class="meta" id="count">0 items</small>
+                </div>
+                <div class="card-body">
+                    <div id="list" class="todo-list"></div>
+                    <div id="empty" class="empty" style="display:none">No tasks yet — add your first one above ✨</div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer>
+            Built with Firebase Firestore & Anonymous Auth. Your data is scoped to your device unless you reuse the link
+            while logged in.
+        </footer>
+    </main>
+
+    <script type="module" src="./scripts.js"></script>
+</body>
+
+</html>

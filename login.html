@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f6f9fc;
+        }
+
+        .card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            margin: 6px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .google {
+            background: #db4437;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Sign In</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button id="signup-btn" class="primary">Sign Up</button>
+        <button id="signin-btn" class="primary">Sign In</button>
+        <button id="google-btn" class="google">Sign in with Google</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup,
+            setPersistence,
+            browserLocalPersistence,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9dqJEwnveezYsuQproNG7Fu6hkxPUeu0",
+            authDomain: "ignup2-5313f.firebaseapp.com",
+            projectId: "ignup2-5313f",
+            storageBucket: "ignup2-5313f.firebasestorage.app",
+            messagingSenderId: "36231750728",
+            appId: "1:36231750728:web:ce0a880428712760dba47d"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // persistent login
+        setPersistence(auth, browserLocalPersistence);
+
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        document.getElementById("signup-btn").onclick = async () => {
+            try { await createUserWithEmailAndPassword(auth, email.value, password.value); }
+            catch (e) { alert(e.message); }
+        };
+        document.getElementById("signin-btn").onclick = async () => {
+            try { await signInWithEmailAndPassword(auth, email.value, password.value); }
+            catch (e) { alert(e.message); }
+        };
+        document.getElementById("google-btn").onclick = async () => {
+            try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+            catch (e) { alert(e.message); }
+        };
+
+        // once signed in -> redirect home
+onAuthStateChanged(auth, (user) => {
+  if (user && !user.isAnonymous) {
+    // redirect only when REAL login (email/Google)
+    window.location.href = "index.html";
+  }
+});
+
+    </script>
+</body>
+
+</html>
